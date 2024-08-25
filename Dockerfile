@@ -1,4 +1,4 @@
-FROM adoptopenjdk:11-hotspot AS builder
+FROM openjdk:17-alpine AS builder
 ENV USE_PROFILE local
 ENV SPRING_CONFIG_ACTIVATE_ON_PROFILE local
 COPY gradlew .
@@ -9,7 +9,7 @@ COPY src src
 RUN chmod +x ./gradlew
 RUN ./gradlew clean bootJar
 
-FROM adoptopenjdk:17-hotspot
+FROM openjdk:17-alpine
 COPY --from=builder build/libs/*.jar app.jar
 
 ENTRYPOINT ["java", "-jar", \
