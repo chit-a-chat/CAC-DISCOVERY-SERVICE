@@ -4,6 +4,8 @@ on:
   pull_request:
     branches:
       - 'release-*'
+    types:
+      - merged
 
 jobs:
   deployment:
@@ -19,9 +21,7 @@ jobs:
 
       - name: Get Current Date and Time
         id: current_time
-        run: |
-          echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
-          echo github.event.pull_request.merged
+        run: echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
 
       - name: Bump version and push tag
         id: tag_version
