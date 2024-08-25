@@ -7,7 +7,6 @@ on:
 
 jobs:
   deployment:
-    if: github.event.pull_request.merged == true
     name: Setup, Build, and Deploy
     runs-on: ubuntu-latest
     permissions:
@@ -20,7 +19,9 @@ jobs:
 
       - name: Get Current Date and Time
         id: current_time
-        run: echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: |
+          echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+          echo github.event.pull_request.merged
 
       - name: Bump version and push tag
         id: tag_version
