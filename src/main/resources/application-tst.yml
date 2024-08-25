@@ -14,3 +14,6 @@ eureka:
     renewalPercentThreshold: 90
   instance:
     prefer-ip-address: true
+logging:
+  level:
+    root: DEBUG
