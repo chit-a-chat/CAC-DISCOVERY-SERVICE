@@ -21,7 +21,7 @@ jobs:
 
       - name: Get Current Date and Time
         id: current_time
-        run: echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M%S')" >> $GITHUB_ENV
+        run: echo "TAG_TIMESTAMP=$(date +'%Y%m%d%H%M')" >> $GITHUB_ENV
 
       - name: Bump version and push tag
         id: tag_version
@@ -40,8 +40,8 @@ jobs:
       - name: Create a GitHub release
         uses: ncipollo/release-action@v1
         with:
-          tag: ${{ env.TAG_TIMESTAMP }}
-          name: Release ${{ env.TAG_TIMESTAMP }}
+          tag: tag-${{ env.TAG_TIMESTAMP }}
+          name: New Release ${{ env.TAG_TIMESTAMP }}
           body: ${{ steps.drafter.outputs.changelog }}
 
       - name: Set up Docker Buildx
@@ -59,4 +59,4 @@ jobs:
         with:
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: nowgnas/CAC-discovery:${{ env.TAG_TIMESTAMP }}, nowgnas/CAC-discovery:latest
+          tags: nowgnas/cac-discovery:${{ env.TAG_TIMESTAMP }}, nowgnas/cac-discovery:latest
