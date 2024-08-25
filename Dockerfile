@@ -1,10 +1,6 @@
 # Step 1: Use a Gradle image to build the application
 FROM gradle:8.2-jdk17 AS builder
 
-# Set environment variables
-ENV USE_PROFILE=local
-ENV SPRING_CONFIG_ACTIVATE_ON_PROFILE=local
-
 # Set the working directory
 WORKDIR /app
 
@@ -33,6 +29,8 @@ COPY --from=builder /app/build/libs/*.jar app.jar
 
 # Expose the port the application will run on
 EXPOSE 8761
+# Set default profile
+ENV PROFILES=default
 
-# Command to run the application
-ENTRYPOINT ["java", "-jar", "app.jar"]
+# Command to run the application with JVM options
+ENTRYPOINT ["sh", "-c", "java -Dspring.profiles.active=${PROFILES} -jar app.jar"]
